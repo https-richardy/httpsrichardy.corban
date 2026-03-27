@@ -1,0 +1,50 @@
+# this composition orchestrates the corban ecosystem for local development.
+
+# it provisions the required infrastructure services and bounded contexts
+# to enable end-to-end execution on a single machine.
+
+services:
+  corban.infrastructure.mongo:
+    container_name: "corban.infrastructure.mongo"
+    image: mongo:latest
+    env_file:
+      - .env
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - corban.infrastructure.mongo:/data/db
+
+  corban.infrastructure.federation:
+    container_name: "corban.infrastructure.federation"
+    image: httpsrichardy/federation:latest
+    env_file:
+      - .env
+    ports:
+      - "5100:8080"
+    depends_on:
+      - corban.infrastructure.mongo
+    environment:
+      Settings__Database__ConnectionString: ${CORBAN_MONGO_CONNECTIONSTRING}
+      Settings__Database__DatabaseName: ${CORBAN_MONGO_DATABASENAME}
+      Settings__Administration__Username: ${CORBAN_ADMIN_USERNAME}
+      Settings__Administration__Password: ${CORBAN_ADMIN_PASSWORD}
+
+  corban.infrastructure.seq:
+    container_name: "corban.infrastructure.seq"
+    image: datalust/seq:latest
+    restart: unless-stopped
+    ports:
+      - "5341:80"
+      - "5342:5341"
+    environment:
+      ACCEPT_EULA: "Y"
+      SEQ_FIRSTRUN_ADMINPASSWORD: ${SEQ_FIRSTRUN_ADMINPASSWORD}
+    volumes:
+      - corban.infrastructure.seq:/data
+
+volumes:
+  corban.infrastructure.mongo:
+  corban.infrastructure.seq:
