@@ -1,0 +1,46 @@
+name: workflow — trigger corban production deployment
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      corban_crm: ${{ steps.filter.outputs.corban_crm }}
+      corban_simulations: ${{ steps.filter.outputs.corban_simulations }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: detect changed paths
+        id: filter
+        uses: dorny/paths-filter@v4
+        with:
+          filters: |
+            corban_crm:
+              - 'Boundaries/Corban.Crm/**'
+            corban_simulations:
+              - 'Boundaries/Corban.Simulations/**'
+
+  deploy-corban-crm:
+    needs: changes
+    if: needs.changes.outputs.corban_crm == 'true'
+    uses: ./.github/workflows/template-deployment.yml
+    with:
+      service_path: Boundaries/Corban.Crm
+      image_name: httpsrichardy/corban.crm
+      deploy_url_secret: CRM_PRODUCTION_DEPLOY_WEBHOOK_URL
+    secrets: inherit
+
+  deploy-corban-simulations:
+    needs: changes
+    if: needs.changes.outputs.corban_simulations == 'true'
+    uses: ./.github/workflows/template-deployment.yml
+    with:
+      service_path: Boundaries/Corban.Simulations
+      image_name: httpsrichardy/corban.simulations
+      deploy_url_secret: SIMULATIONS_PRODUCTION_DEPLOY_WEBHOOK_URL
+    secrets: inherit
