@@ -4,7 +4,7 @@ global using Microsoft.Extensions.Primitives;
 
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Authorization;
-global using Microsoft.OpenApi.Models;
+global using Microsoft.OpenApi;
 
 global using Corban.Simulations.WebApi.Extensions;
 global using Corban.Simulations.WebApi.Constants;

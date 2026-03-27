@@ -14,7 +14,7 @@ public static class OpenApiExtension
             options.AddDocumentTransformer((document, _, _) =>
             {
                 document.Components ??= new OpenApiComponents();
-                document.Components.SecuritySchemes ??= new Dictionary<string, OpenApiSecurityScheme>();
+                document.Components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>();
                 document.Components.SecuritySchemes[SecuritySchemes.Bearer] = new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.Http,
@@ -30,21 +30,9 @@ public static class OpenApiExtension
                     {
                         ClientCredentials = new OpenApiOAuthFlow
                         {
-                            TokenUrl = new Uri(settings.Federation.BaseUrl + "/api/v1/protocol/open-id/connect/token")
+                            TokenUrl = new Uri(settings.Federation.Authority + "/api/v1/protocol/open-id/connect/token")
                         }
                     }
-                };
-
-                document.SecurityRequirements ??= [];
-                document.SecurityRequirements.Add(new OpenApiSecurityRequirement
-                {
-                    [document.Components.SecuritySchemes[SecuritySchemes.Bearer]] = Array.Empty<string>(),
-                });
-
-                document.Info.Contact = new OpenApiContact
-                {
-                    Name = "Richard Garcia",
-                    Email = "code.richardys@gmail.com",
                 };
 
                 return Task.CompletedTask;
