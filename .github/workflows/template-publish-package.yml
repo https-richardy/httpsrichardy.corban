@@ -60,7 +60,7 @@ jobs:
         env:
           BASE_VERSION: ${{ inputs.base_version }}
         run: |
-          if [[ "${GITHUB_REF}" == "refs/heads/master" ]]; then
+          if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
             VERSION="${BASE_VERSION}.${GITHUB_RUN_NUMBER}"
           else
             VERSION="${BASE_VERSION}-beta.${GITHUB_RUN_NUMBER}"
