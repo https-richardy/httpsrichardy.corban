@@ -1,0 +1,23 @@
+namespace Corban.Simulations.WebApi.Extensions;
+
+[ExcludeFromCodeCoverage(Justification = "contains only http pipeline configuration with no business logic.")]
+public static class HttpPipelineExtension
+{
+    public static void UseHttpPipeline(this IApplicationBuilder app)
+    {
+        app.UseHttpsRedirection();
+
+        app.UseRouting();
+        app.UseHeaderPropagation();
+        app.UseCors();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.UseCorrelationMiddleware();
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+        });
+    }
+}
