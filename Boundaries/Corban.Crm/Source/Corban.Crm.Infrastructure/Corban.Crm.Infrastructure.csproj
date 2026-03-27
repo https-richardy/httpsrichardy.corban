@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="HttpsRichardy.Internal.Infrastructure" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="../Corban.Crm.Application/Corban.Crm.Application.csproj" />
     <ProjectReference Include="../Corban.Crm.CrossCutting/Corban.Crm.CrossCutting.csproj" />
   </ItemGroup>
