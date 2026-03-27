@@ -22,14 +22,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: debug changes
-        run: |
-          echo "aspnet: ${{ steps.filter.outputs.corban_internal_aspnet }}"
-          echo "contracts: ${{ steps.filter.outputs.corban_internal_contracts }}"
-
-      - name: show changed files
-        run: git diff --name-only ${{ github.event.before }} ${{ github.sha }}
-
       - name: detect changed paths
         id: filter
         uses: dorny/paths-filter@v4
