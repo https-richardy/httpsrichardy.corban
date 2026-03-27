@@ -1,0 +1,65 @@
+name: pipeline ci/cd — trigger pull request quality assurance
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      corban_crm: ${{ steps.filter.outputs.corban_crm }}
+      corban_simulations: ${{ steps.filter.outputs.corban_simulations }}
+      corban_contracts: ${{ steps.filter.outputs.corban_contracts }}
+      corban_aspnet: ${{ steps.filter.outputs.corban_aspnet }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: detect changed paths
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            corban_crm:
+              - 'Boundaries/Corban.Crm/**'
+            corban_simulations:
+              - 'Boundaries/Corban.Simulations/**'
+            corban_contracts:
+              - 'Artifacts/Corban.Internal.Contracts/**'
+            corban_aspnet:
+              - 'Artifacts/Corban.Internal.AspNet/**'
+
+  # run build and tests for corban.crm if there are changes in the corresponding path
+  quality-assurance-crm:
+    needs: changes
+    if: needs.changes.outputs.corban_crm == 'true'
+    uses: ./.github/workflows/template-quality-assurance.yml
+    with:
+      service_path: Boundaries/Corban.Crm
+
+  # run build and tests for corban.simulations if there are changes in the corresponding path
+  quality-assurance-simulations:
+    needs: changes
+    if: needs.changes.outputs.corban_simulations == 'true'
+    uses: ./.github/workflows/template-quality-assurance.yml
+    with:
+      service_path: Boundaries/Corban.Simulations
+
+  # run build and tests for corban.contracts if there are changes in the corresponding path
+  quality-assurance-contracts:
+    needs: changes
+    if: needs.changes.outputs.corban_contracts == 'true'
+    uses: ./.github/workflows/template-quality-assurance.yml
+    with:
+      service_path: Artifacts/Corban.Internal.Contracts
+
+  # run build and tests for corban.aspnet if there are changes in the corresponding path
+  quality-assurance-aspnet:
+    needs: changes
+    if: needs.changes.outputs.corban_aspnet == 'true'
+    uses: ./.github/workflows/template-quality-assurance.yml
+    with:
+      service_path: Artifacts/Corban.Internal.AspNet
