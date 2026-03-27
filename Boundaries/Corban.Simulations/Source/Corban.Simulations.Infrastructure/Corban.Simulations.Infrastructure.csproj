@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Corban.Simulations.Application/Corban.Simulations.Application.csproj" />
+    <ProjectReference Include="../Corban.Simulations.CrossCutting/Corban.Simulations.CrossCutting.csproj" />
+  </ItemGroup>
+
+</Project>
