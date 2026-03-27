@@ -35,7 +35,7 @@ jobs:
   publish-corban-internal-aspnet:
     needs: changes
     if: needs.changes.outputs.corban_internal_aspnet == 'true'
-    uses: ./.github/workflows/reusable-publish-package.yml
+    uses: ./.github/workflows/template-publish-package.yml
     with:
       working_directory: Artifacts/Corban.Internal.AspNet/Source
       dotnet_version: 10.0.x
@@ -46,7 +46,7 @@ jobs:
   publish-corban-internal-contracts:
     needs: changes
     if: needs.changes.outputs.corban_internal_contracts == 'true'
-    uses: ./.github/workflows/reusable-publish-package.yml
+    uses: ./.github/workflows/template-publish-package.yml
     with:
       working_directory: Artifacts/Corban.Internal.Contracts/Source
       dotnet_version: 10.0.x
