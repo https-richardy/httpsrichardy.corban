@@ -1,10 +1,5 @@
 global using System.Diagnostics.CodeAnalysis;
-global using System.Security.Claims;
-global using Microsoft.Extensions.Primitives;
-
-global using Microsoft.AspNetCore.Mvc;
-global using Microsoft.AspNetCore.Authorization;
-global using Microsoft.OpenApi.Models;
+global using Microsoft.OpenApi;
 
 global using Corban.Crm.WebApi.Extensions;
 global using Corban.Crm.WebApi.Constants;
