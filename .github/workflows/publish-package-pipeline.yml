@@ -32,6 +32,11 @@ jobs:
             corban_internal_contracts:
               - 'Artifacts/Corban.Internal.Contracts/**'
 
+      - name: debug changes
+        run: |
+          echo "aspnet: ${{ steps.filter.outputs.corban_internal_aspnet }}"
+          echo "contracts: ${{ steps.filter.outputs.corban_internal_contracts }}"
+
   # publish this package if there are changes in the corresponding path
   publish-corban-internal-aspnet:
     needs: changes
