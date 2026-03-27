@@ -1,17 +1,16 @@
 name: pipeline ci/cd - publish corban package
 
 on:
-  workflow_run:
-    workflows: ["pipeline ci/cd — trigger pull request quality assurance"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
+    paths:
+      - 'Artifacts/Corban.Internal.AspNet/**'
+      - 'Artifacts/Corban.Internal.Contracts/**'
 
 jobs:
   changes:
     runs-on: ubuntu-latest
-
-    # only run if the triggering workflow run was successful
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     outputs:
       corban_internal_aspnet: ${{ steps.filter.outputs.corban_internal_aspnet }}
@@ -20,6 +19,8 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: detect changed paths
         id: filter
