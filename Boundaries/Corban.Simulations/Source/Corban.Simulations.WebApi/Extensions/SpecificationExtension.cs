@@ -13,7 +13,7 @@ public static class SpecificationsExtension
             options.HideModels = true;
             options.Servers = [];
 
-            options.WithTitle("SEFAZ | Reference");
+            options.WithTitle("CORBAN SIMULATIONS");
             options.ExpandAllTags();
 
             if (environment.IsProduction())
