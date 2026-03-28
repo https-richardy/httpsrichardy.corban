@@ -10,6 +10,6 @@ public sealed class LeadFilters : Filters
     public string? PhoneNumber { get; set; }
     public string? Document { get; set; }
 
-    public static LeadFilters WithoutFilters  => new();
+    public static LeadFilters WithoutFilters => new();
     public static LeadFiltersBuilder AsBuilder() => new();
 }
