@@ -1,9 +1,9 @@
 namespace Corban.Crm.TestSuite.Fixtures;
 
-public sealed class MongoDatabaseFixture : IAsyncLifetime
+public sealed class MongoDatabase : IAsyncLifetime
 {
     public string ConnectionString { get; private set; } = default!;
-    public string DatabaseName { get; private set; } = AppDomain.CurrentDomain.FriendlyName;
+    public string DatabaseName { get; private set; } = "corban";
 
     public IMongoDatabase Database { get; private set; } = default!;
     public IMongoClient Client { get; private set; } = default!;
