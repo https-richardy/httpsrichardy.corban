@@ -6,4 +6,5 @@ public sealed class PipelineFilters : Filters
     public string? Description { get; set; }
 
     public static PipelineFilters WithoutFilters => new();
+    public static PipelineFiltersBuilder AsBuilder() => new();
 }
