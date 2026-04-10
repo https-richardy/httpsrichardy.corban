@@ -8,10 +8,10 @@ public sealed class CustomerFilters : Filters
     public string? PhoneNumber { get; set; }
 
     public LeadSource? Source { get; set; }
-    public Gender? Gender { get ; set; }
+    public Gender? Gender { get; set; }
     public DateTime? BirthDate { get; set; }
     public Dictionary<string, string>? Metadata { get; set; }
 
-    public static CustomerFilters WithoutFilters  => new();
+    public static CustomerFilters WithoutFilters => new();
     public static CustomerFiltersBuilder AsBuilder() => new();
 }
